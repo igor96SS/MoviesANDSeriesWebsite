@@ -4,7 +4,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 // Register HttpClient
-builder.Services.AddHttpClient();
+builder.Services.AddHttpClient("Movies&SeriesAPI", httpClient =>
+{
+    httpClient.BaseAddress = new Uri("https://localhost:7080/");
+});
 
 var app = builder.Build();
 
