@@ -8,26 +8,34 @@ namespace Movies_SeriesWebsite.Pages
     public class MoviesListModel : PageModel
     {
 
-        private readonly HttpClient _httpClient;
-        private IConfiguration _configuration;
+        // IHttpClientFactory set using dependency injection 
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public MoviesListModel(HttpClient httpClient, IConfiguration iConfiguration)
+        public MoviesListModel(IHttpClientFactory httpClientFactory)
         {
-            _httpClient = httpClient;
-            _configuration = iConfiguration;
+            _httpClientFactory = httpClientFactory;
         }
-        
 
-        public async Task OnGetAsync()
+
+        // Adds the data model and binds the form data to the model properties
+        // Enumerable since an array is expected as a response
+        [BindProperty]
+        public IEnumerable<MoviesModel> MoviesList { get; set; }
+
+        public async Task OnGet()
         {
+            // Create the HTTP client using the FruitAPI named factory
+            var httpClient = _httpClientFactory.CreateClient("Movies&SeriesAPI");
 
-            string baseUrl = _configuration.GetSection("ApiSettings").GetSection("BaseUrl").Value;
+            // Execute the GET operation and store the response
+            using HttpResponseMessage response = await httpClient.GetAsync("movies");
 
-            var response = await _httpClient.GetAsync(baseUrl + "movies");
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            var movies = JsonSerializer.Deserialize<List<Movies>>(content);
-            ViewData["Movies"] = movies;
+            if (response.IsSuccessStatusCode)
+            {
+                using var contentStream = await response.Content.ReadAsStreamAsync();
+                MoviesList = await JsonSerializer.DeserializeAsync<IEnumerable<MoviesModel>>(contentStream);
+            }
+
         }
 
 
