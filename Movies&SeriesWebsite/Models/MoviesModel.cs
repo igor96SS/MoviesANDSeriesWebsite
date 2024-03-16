@@ -2,7 +2,7 @@
 
 namespace Movies_SeriesWebsite.Models
 {
-    public class Movies
+    public class MoviesModel
     {
         public int id { get; set; }
         public string movieName { get; set; }
