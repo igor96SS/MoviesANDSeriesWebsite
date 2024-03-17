@@ -1,4 +1,28 @@
 ﻿@page
 @model Movies_SeriesWebsite.Pages.Movies.EditMovieModel
 @{
+    ViewData["Title"] = "Edit Movie";
 }
+
+<form method="post">
+    <input hidden asp-for="MoviesModel.id" />
+    <div class="mb-3">
+        <label asp-for="MoviesModel.movieName" class="form-label">Movie Name:</label>
+        <input type="text" class="form-control" asp-for="MoviesModel.movieName" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="MoviesModel.year" class="form-label">Year:</label>
+        <input type="number" class="form-control" asp-for="MoviesModel.year" min="1900" max="2100" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="MoviesModel.own" class="form-label">Own:</label>
+        <select class="form-control" asp-for="MoviesModel.own">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a asp-page="Movieslist" class="btn btn-secondary">Cancel</a>
+
+</form>
