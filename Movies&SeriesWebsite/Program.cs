@@ -3,6 +3,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+// Register HttpClient
+builder.Services.AddHttpClient("Movies&SeriesAPI", httpClient =>
+{
+    httpClient.BaseAddress = new Uri("https://localhost:7080/");
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
