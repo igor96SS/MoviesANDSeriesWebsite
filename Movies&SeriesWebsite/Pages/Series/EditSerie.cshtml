@@ -1,0 +1,40 @@
+﻿@page
+@model Movies_SeriesWebsite.Pages.Series.EditSerieModel
+@{
+    ViewData["Title"] = "Edit Serie";
+}
+
+<form method="post">
+    <input hidden asp-for="SeriesModel.serieID" />
+    <div class="mb-3">
+        <label asp-for="SeriesModel.serieName" class="form-label">Serie Name:</label>
+        <input type="text" class="form-control" asp-for="SeriesModel.serieName" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="SeriesModel.startYear" class="form-label">Start Year:</label>
+        <input type="number" class="form-control" asp-for="SeriesModel.startYear" min="1900" max="2100" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="SeriesModel.endYear" class="form-label">End Year:</label>
+        <input type="number" class="form-control" asp-for="SeriesModel.endYear" min="1900" max="2100" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="SeriesModel.lastSeason" class="form-label">Last Season:</label>
+        <input type="number" class="form-control" asp-for="SeriesModel.lastSeason" min="1" max="50" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="SeriesModel.lastEpisode" class="form-label">Last Episode:</label>
+        <input type="number" class="form-control" asp-for="SeriesModel.lastEpisode" min="1" max="50" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="SeriesModel.ownSeason" class="form-label">Own:</label>
+        <select class="form-control" asp-for="SeriesModel.ownSeason">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    
+</form>
