@@ -1,4 +1,107 @@
 ﻿@page
-@model Movies_SeriesWebsite.Pages.Series.SeriesListModel
+@using Movies_SeriesWebsite.Models
+@model SeriesListModel
 @{
+    ViewData["Title"] = "Series";
+}
+
+<div class="container p-3">
+    <h1>Series List</h1>
+
+    <!-- Button to trigger modal -->
+    <div class="col text-end pb-4">
+        <button class="btn btn-primary mx-2 text-end" data-bs-toggle="modal" data-bs-target="#addSeriesModal">
+            <i class="bi bi-plus-square"></i> &nbsp;Add Series
+        </button>
+    </div>
+
+
+    <div class="modal fade" id="addSeriesModal" tabindex="-1" aria-labelledby="addSeriesModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addSeriesModalLabel">Add Serie</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="mb-3">
+                            <label asp-for="SeriesModelPOST.serieName" class="form-label">Serie Name:</label>
+                            <input type="text" class="form-control" asp-for="SeriesModelPOST.serieName" />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="SeriesModelPOST.startYear" class="form-label">Start Year:</label>
+                            <input type="number" class="form-control" asp-for="SeriesModelPOST.startYear" min="1900" max="2100" />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="SeriesModelPOST.endYear" class="form-label">End Year:</label>
+                            <input type="number" class="form-control" asp-for="SeriesModelPOST.endYear" min="1900" max="2100" />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="SeriesModelPOST.lastSeason" class="form-label">Last Season:</label>
+                            <input type="number" class="form-control" asp-for="SeriesModelPOST.lastSeason" min="1" max="50" />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="SeriesModelPOST.lastEpisode" class="form-label">Last Episode:</label>
+                            <input type="number" class="form-control" asp-for="SeriesModelPOST.lastEpisode" min="1" max="50" />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="SeriesModelPOST.ownSeason" class="form-label">Own:</label>
+                            <select class="form-control" asp-for="SeriesModelPOST.ownSeason">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table mt-5">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Start Year</th>
+                <th scope="col">End Year</th>
+                <th scope="col">Last Season</th>
+                <th scope="col">Last Episode</th>
+                <th scope="col">Own</th>
+                <th class="text-center">Options</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var serie in Model.SeriesModelGET)
+            {
+                <tr>
+                    <td>@serie.serieName</td>
+                    <td>@serie.startYear</td>
+                    <td>@serie.endYear</td>
+                    <td>@serie.lastSeason</td>
+                    <td>@serie.lastEpisode</td>
+                    <td>@(serie.ownSeason ? "Yes" : "No")</td>
+                    <td width="30%" class="text-center">
+                        <div class="w-75 btn-group btn-group-sm" role="group" style="text-align:center">
+                            <a asp-page="EditSerie" asp-route-id="@serie.serieID" class="btn btn-primary  mx-2">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@serie.serieID">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

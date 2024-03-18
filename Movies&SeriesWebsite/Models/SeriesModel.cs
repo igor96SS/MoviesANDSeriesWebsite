@@ -2,12 +2,12 @@
 {
     public class SeriesModel
     {
-        public int SerieID { get; set; }
-        public string SerieName { get; set; }
-        public int? StartYear { get; set; }
-        public int? EndYear { get; set; }
-        public int? OwnSeason { get; set; }
-        public int? LastSeason { get; set; }
-        public int? LastEpisode { get; set; }
+        public int serieID { get; set; }
+        public string serieName { get; set; }
+        public int? startYear { get; set; }
+        public int? endYear { get; set; }
+        public bool ownSeason { get; set; }
+        public int? lastSeason { get; set; }
+        public int? lastEpisode { get; set; }
     }
 }
