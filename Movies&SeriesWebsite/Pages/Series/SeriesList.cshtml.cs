@@ -55,11 +55,11 @@ namespace Movies_SeriesWebsite.Pages.Series
             }
         }
 
-        public async Task<IActionResult> OnPostDelete()
+        public async Task<IActionResult> OnPostDelete(int id)
         {
             var httpClient = _httpClientFactory.CreateClient("Movies&SeriesAPI");
 
-            using HttpResponseMessage response = await httpClient.DeleteAsync("series/" + SeriesModelPOST.serieID.ToString());
+            using HttpResponseMessage response = await httpClient.DeleteAsync("series/" + id.ToString());
 
             if (response.IsSuccessStatusCode)
             {
